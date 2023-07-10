@@ -17,7 +17,7 @@
                 </div>
                 <div class="full progress_bar_inner p-2">
                     <form method="GET" action="">
-                        <div class="row text-right" >
+                        <div class="row text-right">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Qualification" class="">الرقم الوطني</label>
@@ -104,6 +104,7 @@
                                             <tbody>
                                                 @foreach ($users as $item)
                                                     <tr>
+
                                                         <td>{{ $item->NId }}</td>
                                                         <td>{{ $item->name }}</td>
                                                         <td>{{ $item->surename }}</td>
@@ -137,8 +138,16 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('users.edit', $item->id) }}"><i
-                                                                    class="fa fa-edit yellow_color"></i></a>
+                                                            @if ($item->admin == 1)
+                                                                @if (Auth::user()->admin == 1)
+                                                                    <a href="{{ route('users.edit', $item->id) }}"><i
+                                                                            class="fa fa-edit yellow_color"></i></a>
+                                                                @endif
+                                                            @else
+                                                                <a href="{{ route('users.edit', $item->id) }}"><i
+                                                                        class="fa fa-edit yellow_color"></i></a>
+                                                            @endif
+
                                                         </td>
                                                     </tr>
                                                 @endforeach
