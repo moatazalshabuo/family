@@ -52,7 +52,6 @@ class UsersController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
             "surename" => ['required', 'string', 'max:30'],
             "birthday" => ['required'],
             "gander" => ['required'],
