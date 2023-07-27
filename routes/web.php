@@ -31,7 +31,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource("users",UsersController::class)->middleware("auth");
-
+Route::get("move-users",[UsersController::class,'Move_users'])->name("users.move")->middleware('auth');
 Route::controller(ExcludedController::class)->group(function(){
     Route::middleware('auth')->group(function(){
         Route::get('excluded','index')->name("excluded.index");

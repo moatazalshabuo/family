@@ -6,6 +6,7 @@ use App\Models\BloodMoney;
 use App\Models\BloodMoneyUser;
 use App\Models\Box;
 use App\Models\BoxUser;
+use App\Models\RecordUserMove;
 
 class Helper
 {
@@ -74,4 +75,11 @@ class Helper
         }
     }
 
+    public static function record_move($id, $descripe)
+    {
+        RecordUserMove::create([
+            'user'=>$id,
+            "descripe"=>$descripe
+        ]);
+    }
 }

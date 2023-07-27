@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
+use App\Models\RecordUserMove;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
@@ -18,22 +20,30 @@ class UsersController extends Controller
     {
         $query = User::query();
 
-        if(request('NId')){
-            $query->where("NId",request('NId'));
+        if (request('NId')) {
+            $query->where("NId", request('NId'));
         }
-        if(request('name')){
-            $query->where("name","like","%".request('name')."%");
+        if (request('name')) {
+            $query->where("name", "like", "%" . request('name') . "%");
         }
-        if(request('Qualification')){
-            $query->where('Qualification',"like","%".request('Qualification')."%");
+        if (request('Qualification')) {
+            $query->where('Qualification', "like", "%" . request('Qualification') . "%");
         }
-        if(request('gander')){
-            $query->where('gander',request('gander'));
+        if (request('gander')) {
+            $query->where('gander', request('gander'));
         }
-        if(Auth::user()->type != 1){
-            $query->where('city','like',"%".Auth::user()->city."%");
+        if (Auth::user()->type != 1) {
+            $query->where('city', 'like', "%" . Auth::user()->city . "%");
+            $query->where('type', '!=', 1);
+            $users = $query->paginate(15);
+        } else {
+            if (Auth::user()->admin == 1) {
+                $users = $query->with('user_p')->paginate(20);
+            } else {
+                $users = $query->where('admin', "!=", '1')->with('user_p')->paginate(20);
+            }
         }
-        $users = $query->paginate(15);
+
         return view("users/manage", compact('users'));
     }
 
@@ -81,12 +91,12 @@ class UsersController extends Controller
             'Specialization' => $request['Specialization'],
             'FNId' => $request['FNId'],
             "MNID" => $request['MNId'],
-            'type'=>$request['type'],
+            'type' => $request['type'],
             "marital_status" => $request['marital_status'],
             "life" => $request['life'],
             "is_work" => $request['is_work'],
         ]);
-
+        Helper::record_move(Auth::id(), "قام باضافة مستخدم " . $request['name']);
         return redirect()->back()->with("success", "تم الاضافة بنجاح");
     }
 
@@ -104,7 +114,7 @@ class UsersController extends Controller
     public function edit(string $id)
     {
         $user = User::find($id);
-        return view("users/edit",compact('user'));
+        return view("users/edit", compact('user'));
     }
 
     /**
@@ -150,11 +160,12 @@ class UsersController extends Controller
             'Specialization' => $request['Specialization'],
             'FNId' => $request['FNId'],
             "MNID" => $request['MNId'],
-            'type'=>$request['type'],
+            'type' => $request['type'],
             "marital_status" => $request['marital_status'],
             "life" => $request['life'],
             "is_work" => $request['is_work'],
         ]);
+        Helper::record_move(Auth::id(), "قام بتعديل مستخدم " . $request['name']);
         return redirect()->route("users.index")->with("success", "تم التعديل بنجاح");
     }
 
@@ -164,5 +175,32 @@ class UsersController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function Move_users()
+    {
+        $query = RecordUserMove::query();
+
+        if (Auth::user()->type != 1) {
+            $user = [];
+            $user1 = [];
+            foreach (User::where('type', 1)->get() as $val) {
+                $user[] = $val->id;
+            }
+            foreach (User::where('city', 'like', "%" . Auth::user()->city . "%")->get() as $val) {
+                $user1[] = $val->id;
+            }
+
+            $query->whereNotIn('user', $user)->whereIn("user",$user1);
+            $users = $query->paginate(20);
+        } else {
+            if (Auth::user()->admin == 1) {
+                $users = $query->with('user_p')->paginate(20);
+            } else {
+                $users = $query->where('admin', "!=", '1')->with('user_p')->paginate(20);
+            }
+        }
+
+        return view("users/move_users", compact('users'));
     }
 }

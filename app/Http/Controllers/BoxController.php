@@ -71,7 +71,7 @@ class BoxController extends Controller
                 'value_still' => ($request->for == 0) ? $request->value : null,
                 "status" => 1,
             ]);
-
+            Helper::record_move(Auth::id(),"اضافة صندوق  باسم ".$request->name_box);
             foreach ($users as $item) {
                 $_v = BoxUser::create(
                     [
@@ -153,6 +153,8 @@ class BoxController extends Controller
                         'value_in' => $item->value_in + $_POST['pay' . $item->box_id],
                     ]);
                     // die($_box->value_in);
+                    Helper::record_move(Auth::id(),"قام باضافة قيمة المستخدم  ".User::find($_box->user_id)->name . "الى صندوق  ".Box::find($_box->box_id)->name_box);
+
                 } else {
                     return redirect()->back()->with('error', 'القيمة المدفوعة اكبر من قيمة المخصصه لك' . " " . $item->box->name_box);
                 }
@@ -163,6 +165,7 @@ class BoxController extends Controller
                     $_box->update([
                         'value_in' => $item->value_in - $_POST['unpay' . $item->box_id],
                     ]);
+                    Helper::record_move(Auth::id(),"قام باسترجاع قيمة المستخدم  ".User::find($_box->user_id)->name . "من صندوق  ".Box::find($_box->box_id)->name_box);
                 } else {
                     return redirect()->back()->with('error', 'القيمة المخصومة اكبر من قيمة المخصصه لك' . " " . $item->box->name_box);
                 }

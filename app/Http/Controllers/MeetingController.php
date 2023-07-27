@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Models\Excluded;
 use App\Models\Meeting;
 use App\Models\MeetingUser;
 use App\Models\User;
 use App\Notifications\Mynotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MeetingController extends Controller
 {
@@ -63,7 +65,7 @@ class MeetingController extends Controller
                 'descripe' => $request->descripe,
                 "time" => $request->time,
             ]);
-
+            Helper::record_move(Auth::id(), "قام بتحديد موعد اجتماع" . $request->title );
             foreach ($users as $item) {
                 $_v = MeetingUser::create(
                     [

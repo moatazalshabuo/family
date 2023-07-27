@@ -26,8 +26,8 @@
                         <div class="col-md-12">
                             <div class="full">
                                 <div class="padding_infor_info">
-                                    <form action="{{route('users.update',$user->id)}}" method="POST">
-                                        {{csrf_field()}}
+                                    <form action="{{ route('users.update', $user->id) }}" method="POST">
+                                        {{ csrf_field() }}
 
                                         @method('PUT')
                                         <div class="row text-right">
@@ -36,7 +36,7 @@
                                                     <label for="name" class="">الاسم</label>
                                                     <input id="name" type="text"
                                                         class="form-control @error('name') is-invalid @enderror"
-                                                        name="name" value="{{ old('name',$user->name) }}" required
+                                                        name="name" value="{{ old('name', $user->name) }}" required
                                                         autocomplete="name" autofocus>
                                                     @error('name')
                                                         <span class="invalid-feedback" role="alert">
@@ -50,8 +50,8 @@
                                                     <label for="surename" class="">اللقب</label>
                                                     <input id="surename" type="text"
                                                         class="form-control @error('surename') is-invalid @enderror"
-                                                        name="surename" value="{{ old('surename',$user->surename) }}" required
-                                                        autocomplete="surename" autofocus>
+                                                        name="surename" value="{{ old('surename', $user->surename) }}"
+                                                        required autocomplete="surename" autofocus>
                                                     @error('surename')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -64,8 +64,7 @@
                                                     <label for="city" class="">المدينة</label>
                                                     <select id="city"
                                                         class="form-control select2-d @error('city') is-invalid @enderror"
-                                                        name="city" required
-                                                        >
+                                                        name="city" required>
                                                         <option value="">اختر المدينة</option>
                                                         <option value="طرابلس">طرابلس</option>
                                                         <option value="بنغازي">بنغازي</option>
@@ -125,7 +124,7 @@
                                                         <option value="مسلاتة">مسلاتة</option>
                                                         <option value="الخمس">الخمس</option>
                                                         <option value="قصر-الاخيار">قصر الاخيار</option>
-                                                </select>
+                                                    </select>
                                                     @error('city')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -138,8 +137,8 @@
                                                     <label for="birthday" class="">تاريخ الميلاد</label>
                                                     <input id="birthday" type="date"
                                                         class="form-control @error('birthday') is-invalid @enderror"
-                                                        name="birthday" value="{{ old('birthday',$user->birthday) }}" required
-                                                        autocomplete="birthday" autofocus>
+                                                        name="birthday" value="{{ old('birthday', $user->birthday) }}"
+                                                        required autocomplete="birthday" autofocus>
                                                     @error('birthday')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -151,9 +150,10 @@
                                                 <div class="form-group">
                                                     <label for="gander" class="">الجنس</label>
                                                     <select id="gander" name="gander"
-                                                        class="form-control @error('gander') is-invalid @enderror" required>
-                                                        <option @selected(old('gander',$user->gander) == 1) value="1">ذكر</option>
-                                                        <option @selected(old('gander',$user->gander) == 2) value="2">انثى</option>
+                                                        class="form-control @error('gander') is-invalid @enderror"
+                                                        required>
+                                                        <option @selected(old('gander', $user->gander) == 1) value="1">ذكر</option>
+                                                        <option @selected(old('gander', $user->gander) == 2) value="2">انثى</option>
                                                     </select>
                                                     @error('gander')
                                                         <span class="invalid-feedback" role="alert">
@@ -165,10 +165,11 @@
                                             <div class="col-md-4 my-2">
                                                 <div class="form-group">
                                                     <label for="phone" class="">رقم الهاتف</label>
-                                                    <input id="phone" name="phone" value="{{ old('phone',$user->phone) }}"
+                                                    <input id="phone" name="phone"
+                                                        value="{{ old('phone', $user->phone) }}"
                                                         class="form-control @error('phone') is-invalid @enderror"
-                                                        type="number" >
-                                                        <small>اختياري</small>
+                                                        type="number">
+                                                    <small>اختياري</small>
                                                     @error('phone')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -180,7 +181,8 @@
                                             <div class="col-md-4 my-2">
                                                 <div class="form-group">
                                                     <label for="NId" class="">الرقم الوطني</label>
-                                                    <input id="NId" name="NId" value="{{ old('NId',$user->NId) }}"
+                                                    <input id="NId" name="NId"
+                                                        value="{{ old('NId', $user->NId) }}"
                                                         class="form-control  @error('NId') is-invalid @enderror"
                                                         type="number" min="110000000000" max="230000000000" required>
                                                     @error('NId')
@@ -196,15 +198,15 @@
                                                     <select id="Qualification" name="Qualification"
                                                         class="form-control @error('Qualification') is-invalid @enderror"
                                                         required>
-                                                        <option @selected(old('Qualification',$user->Qualification) == 'لايوجد') value="لايوجد">لايوجد</option>
-                                                        <option @selected(old('Qualification',$user->Qualification) == 'اساسي') value="اساسي">اساسي</option>
-                                                        <option @selected(old('Qualification',$user->Qualification) == 'متوسط') value="متوسط">متوسط</option>
-                                                        <option @selected(old('Qualification',$user->Qualification) == 'ثانوي') value="ثانوي">ثانوي</option>
-                                                        <option @selected(old('Qualification',$user->Qualification) == 'باكالوريوس') value="باكالوريوس">باكالوريوس
+                                                        <option @selected(old('Qualification', $user->Qualification) == 'لايوجد') value="لايوجد">لايوجد</option>
+                                                        <option @selected(old('Qualification', $user->Qualification) == 'اساسي') value="اساسي">اساسي</option>
+                                                        <option @selected(old('Qualification', $user->Qualification) == 'متوسط') value="متوسط">متوسط</option>
+                                                        <option @selected(old('Qualification', $user->Qualification) == 'ثانوي') value="ثانوي">ثانوي</option>
+                                                        <option @selected(old('Qualification', $user->Qualification) == 'باكالوريوس') value="باكالوريوس">باكالوريوس
                                                         </option>
-                                                        <option @selected(old('Qualification',$user->Qualification) == 'ماجستير') value="ماجستير">ماجستير
+                                                        <option @selected(old('Qualification', $user->Qualification) == 'ماجستير') value="ماجستير">ماجستير
                                                         </option>
-                                                        <option @selected(old('Qualification',$user->Qualification) == 'دكتورا') value="دكتورا">دكتورا</option>
+                                                        <option @selected(old('Qualification', $user->Qualification) == 'دكتورا') value="دكتورا">دكتورا</option>
                                                     </select>
                                                     @error('Qualification')
                                                         <span class="invalid-feedback" role="alert">
@@ -216,7 +218,8 @@
                                             <div class="col-md-4 my-2">
                                                 <div class="form-group">
                                                     <label for="Specialization" class="">التخصص</label>
-                                                    <input id="Specialization" value="{{ old('Specialization',$user->Specialization) }}"
+                                                    <input id="Specialization"
+                                                        value="{{ old('Specialization', $user->Specialization) }}"
                                                         name="Specialization"
                                                         class="form-control @error('Specialization') is-invalid @enderror"
                                                         type="text" required placeholder="لايوجد او كتابة التخصص">
@@ -232,10 +235,11 @@
                                                     <label for="FNId"> الرقم
                                                         الوطني
                                                         للاب</label>
-                                                    <input id="FNId" name="FNId" value="{{ old('FNId',$user->FNId) }}"
+                                                    <input id="FNId" name="FNId"
+                                                        value="{{ old('FNId', $user->FNId) }}"
                                                         class="form-control @error('FNId') is-invalid @enderror"
                                                         min="110000000000" max="130000000000" type="number" required>
-                                                        <small>اختياري</small>
+                                                    <small>اختياري</small>
                                                     @error('FNId')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -248,10 +252,11 @@
                                                     <label for="MNId"> الرقم
                                                         الوطني
                                                         للام</label>
-                                                    <input id="MNId" name="MNId" value="{{ old('MNId',$user->MNID) }}"
+                                                    <input id="MNId" name="MNId"
+                                                        value="{{ old('MNId', $user->MNID) }}"
                                                         class="form-control @error('MNId') is-invalid @enderror"
-                                                        min="210000000000" max="230000000000" type="number" >
-                                                        <small>اختياري</small>
+                                                        min="210000000000" max="230000000000" type="number">
+                                                    <small>اختياري</small>
                                                     @error('MNId')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -266,9 +271,9 @@
                                                     <select id="marital_status" name="marital_status"
                                                         class="form-control @error('marital_status') is-invalid @enderror"
                                                         required>
-                                                        <option @selected(old('marital_status',$user->marital_status) == '1') value="1">اعزب</option>
-                                                        <option @selected(old('marital_status',$user->marital_status) == '2') value="2">متزوج</option>
-                                                        <option @selected(old('marital_status',$user->marital_status) == '3') value="3">مطلق</option>
+                                                        <option @selected(old('marital_status', $user->marital_status) == '1') value="1">اعزب</option>
+                                                        <option @selected(old('marital_status', $user->marital_status) == '2') value="2">متزوج</option>
+                                                        <option @selected(old('marital_status', $user->marital_status) == '3') value="3">مطلق</option>
                                                     </select>
                                                     @error('marital_status')
                                                         <span class="invalid-feedback" role="alert">
@@ -281,13 +286,16 @@
                                                 <div class="form-group">
                                                     <label for="marital_status">صلاحية الوصول</label>
                                                     <select id="type" name="type"
-                                                        class="form-control @error('type') is-invalid @enderror"
-                                                        required>
-                                                        @if (Auth::user()->name)
-                                                        <option @selected(old('type',$user->type) == '1') value="1">مسؤول النظام</option>
-                                                        <option @selected(old('type',$user->type) == '2') value="2">ادارة المنطقة</option>
+                                                        class="form-control @error('type') is-invalid @enderror" required>
+
+                                                        @if (Auth::user()->type == 1)
+                                                            <option @selected(old('type', $user->type) == '1') value="1">مسؤول
+                                                                النظام</option>
+                                                            <option @selected(old('type', $user->type) == '2') value="2">ادارة
+                                                                المنطقة</option>
                                                         @endif
-                                                        <option @selected(old('type',$user->type) == '3') value="3">مستخدم عادي</option>
+                                                        <option @selected(old('type', $user->type) == '3') value="3">مستخدم عادي
+                                                        </option>
                                                     </select>
                                                     @error('marital_status')
                                                         <span class="invalid-feedback" role="alert">
@@ -299,10 +307,10 @@
                                             <div class="col-md-4 my-2">
                                                 <div class="form-group">
                                                     <label>موظف</label>
-                                                    <input type="radio" @checked(old('is_work',$user->is_work) == 1) name="is_work"
+                                                    <input type="radio" @checked(old('is_work', $user->is_work) == 1) name="is_work"
                                                         value="1">
                                                     <label>عاطل</label>
-                                                    <input type="radio" @checked(old('is_work',$user->is_work) == 0) name="is_work"
+                                                    <input type="radio" @checked(old('is_work', $user->is_work) == 0) name="is_work"
                                                         value="0">
                                                     @error('is_work')
                                                         <span class="invalid-feedback" role="alert">
@@ -315,9 +323,11 @@
                                             <div class="col-md-4 my-2">
                                                 <div class="form-group">
                                                     <label>على قيد الحياة</label>
-                                                    <input type="radio" @checked($user->life == 1) name="life" value="1">
+                                                    <input type="radio" @checked($user->life == 1) name="life"
+                                                        value="1">
                                                     <label>متوفي</label>
-                                                    <input type="radio" name="life" @checked($user->life == 0) value="0">
+                                                    <input type="radio" name="life" @checked($user->life == 0)
+                                                        value="0">
                                                     @error('life')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -330,8 +340,8 @@
                                                     <label for="password">كلمة المرور</label>
                                                     <input id="password" type="password"
                                                         class="form-control @error('password') is-invalid @enderror"
-                                                        name="password"  autocomplete="new-password">
-                                                        <small>ملئ الحقل فقط في حالةاردت تغيير كلمة السر</small>
+                                                        name="password" autocomplete="new-password">
+                                                    <small>ملئ الحقل فقط في حالةاردت تغيير كلمة السر</small>
                                                     @error('password')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -361,8 +371,8 @@
 @endsection
 @section('js')
     <script>
-        $(function(){
-            var da = "{{old('city',$user->city)}}"
+        $(function() {
+            var da = "{{ old('city', $user->city) }}"
             $("#city").val(da).change()
         })
     </script>

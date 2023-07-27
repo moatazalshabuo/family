@@ -284,7 +284,7 @@
                                                     <select id="type" name="type"
                                                         class="form-control @error('type') is-invalid @enderror"
                                                         required>
-                                                        @if (Auth::user()->name)
+                                                        @if (Auth::user()->type == 1)
                                                         <option @selected(old('type') == '1') value="1">مسؤول النظام</option>
                                                         <option @selected(old('type') == '2') value="2">ادارة المنطقة</option>
                                                         @endif

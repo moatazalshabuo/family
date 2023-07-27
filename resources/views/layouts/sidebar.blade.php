@@ -40,6 +40,9 @@
                             <a href="{{ route('users.create') }}"><i class="fa fa-plus green_color"></i> <span>اضافة فرد
                                     جديد</span></a>
                         </li>
+                        <li>
+                            <a href="{{ route('users.move') }}"><i class="fa fa-plus green_color"></i> <span>حركة المستخدمين</span></a>
+                        </li>
                     </ul>
                 </li>
                 <li class="active">
