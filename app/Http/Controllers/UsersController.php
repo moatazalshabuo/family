@@ -38,9 +38,9 @@ class UsersController extends Controller
             $users = $query->paginate(15);
         } else {
             if (Auth::user()->admin == 1) {
-                $users = $query->with('user_p')->paginate(20);
+                $users = $query->paginate(20);
             } else {
-                $users = $query->where('admin', "!=", '1')->with('user_p')->paginate(20);
+                $users = $query->where('admin', "!=", '1')->paginate(20);
             }
         }
 
